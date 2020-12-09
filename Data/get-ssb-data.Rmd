@@ -49,7 +49,7 @@ length(tid_vec)
 ```
 
 
-```{r, ech0=FALSE}
+```{r}
 c(head(tid_vec, n = 14), "...", tail(tid_vec, n = 14))
 ```
 
@@ -94,14 +94,25 @@ dim(df_arbl_p_alder)
 Her fordelt på kjønn. Vi har `418*185*2=154660` rekker som er under grensen på 800k. Kan derfor hente alt på en gang. Det er nå ikke lenger Alder som er statistikk variabel så den må byttes ut med `Kjonn =`
 
 ```{r, echo=FALSE}
-#arbl_p_kjonn <- ApiData()
+arbl_p_kjonn <- ApiData(    
+    04471,
+    Region = kom_vec,
+    Tid = tid_vec,
+    Kjonn = kjonn_vec)
 
-#df_arbl_p_kjonn <- 
+df_arbl_p_kjonn <- data.frame(
+    knr = arbl_p_kjonn[[2]]$Region,
+    knavn = arbl_p_kjonn[[1]]$region,
+    kjonn = arbl_p_kjonn[[1]]$kjønn,
+    tid = arbl_p_kjonn[[2]]$Tid,
+    alp_k = arbl_p_kjonn[[1]]$value)
+
+
 ```
 
 ```{r}
-#dim(df_arbl_p_kjonn)
-#names(df_arbl_p_kjonn)
+dim(df_arbl_p_kjonn)
+names(df_arbl_p_kjonn)
 ```
 
 ### Tabell 10594, Antall arbeidsløse per kommune, etter kjønn, månedlig 1991M01-2014M05
@@ -110,10 +121,19 @@ Antall rekker vil være `418*185*2=154660`.
 
 Igjen er det `Kjonn` og ikke `Alder` som er statistikk-variabel.
 
-```{r, echo=FALSE}
-#arbl <- ApiData()
+```{r}
+arbl <- ApiData(
+    10594,
+    Region = kom_vec,
+    Tid = tid_vec,
+    Kjonn = kjonn_vec)
 
-#df_arbl <- 
+df_arbl <- data.frame(
+    knr = arbl[[2]]$Region,
+    knavn = arbl[[1]]$region,
+    kjonn = arbl[[1]]$kjønn,
+    tid = arbl[[2]]$Tid,
+    al = arbl[[1]]$value)
 ```
 
 ```{r}
