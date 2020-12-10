@@ -147,16 +147,16 @@ Antall rekker blir `418*16*106*2=1417856` som er mer enn maks grensen på 800k. 
 
 Bruk c() og str_pad() til å lage en `alder_klasse_vec` på formen "000", "001", "002" ... "104", "105+". Bruk denne som verdi for Alder i `ApiData()` kallet, dvs. `Alder = alder_klasse_vec`. Bruk hhv. Kjonn = "Kvinner" og Kjonn = "Menn" for å hente de respektive datasettene.
 
-```{r, echo=FALSE}
-#alder_klasse_vec <- 
+```{r}
+alder_klasse_vec <-c(str_pad(1:104, width=3, pad="0"), "105+") 
 ```
 
 ```{r}
-#length(alder_klasse_vec)
+length(alder_klasse_vec)
 ```
 
 ```{r}
-#c(head(alder_klasse_vec, n = 5), "...", tail(alder_klasse_vec, n = 5))
+c(head(alder_klasse_vec, n = 5), "...", tail(alder_klasse_vec, n = 5))
 ```
 
 
@@ -185,21 +185,38 @@ df_bef_K <- data.frame(
 ```
 
 ```{r}
-#dim(df_bef_K)
+dim(df_bef_K)
 ```
 
 #### Menn
 
 Hent ned tilsvarende befolkningsdata for menn.
 
-```{r, echo=FALSE}
+```{r,}
+bef_M <- ApiData(
+    07459,
+    Region = kom_vec,
+    Tid = as.character(1999:2014),
+    Alder = alder_klasse_vec,
+    Kjonn = "Menn"
+)
+
+df_bef_M <- data.frame(
+    knr = bef_M[[2]]$Region,
+    knavn = bef_M[[1]]$region,
+    tid = bef_M[[2]]$Tid,
+    # Vil ha Kvinner, Menn ikke 2, 1 i bef_K[[2]]$Kjonn
+    kjonn = bef_M[[1]]$kjønn,
+    # velger alder som 000 001 etc
+    alder = bef_M[[2]]$Alder,
+    bef = bef_M[[2]]$value)
 #bef_M <- ApiData()
 
 #df_bef_M <- 
 ```
 
 ```{r}
-#dim(df_bef_M)
+dim(df_bef_M)
 ```
 
 ### Write out the dataframes
@@ -207,19 +224,19 @@ Hent ned tilsvarende befolkningsdata for menn.
 For kontroll.
 
 ```{r}
-# names(df_arbl_p_alder)
-# names(df_arbl_p_kjonn)
-# names(df_arbl)
-# names(df_bef_K)
-# names(df_bef_M)
+ names(df_arbl_p_alder)
+ names(df_arbl_p_kjonn)
+ names(df_arbl)
+ names(df_bef_K)
+ names(df_bef_M)
 ```
 
 ```{r}
-# dim(df_arbl_p_alder)
-# dim(df_arbl_p_kjonn)
-# dim(df_arbl)
-# dim(df_bef_K)
-# dim(df_bef_M)
+dim(df_arbl_p_alder)
+dim(df_arbl_p_kjonn)
+dim(df_arbl)
+dim(df_bef_K)
+dim(df_bef_M)
 ```
 
 ```{r}
