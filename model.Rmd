@@ -126,10 +126,13 @@ Bruk år som x-variabel.
 
 ```{r,}
 wf %>% 
-    ggplot(wf, mapping = aes(x = år)) +
-  geom_line(mapping = aes(y = wf_K/bef_K, color = "...")) +
-  geom_line(mapping = aes(y = wf_M/bef_M, color = "darkblue")) +
-  geom_line(mapping = aes(y = wf_KM/bef_KM)) +
+  ggplot() +
+  # geom_line(mapping = aes(y = wf_K/bef_K, color = "...")) +
+  # geom_line(mapping = aes(y = wf_M/bef_M, color = "darkblue")) +
+  # geom_line(mapping = aes(y = wf_KM/bef_KM)) +
+  geom_line(mapping = aes(x = år, y = wf_K/bef_K), colour = "red") +
+  geom_line(mapping = aes(x = år, y = wf_M/bef_M), colour = "blue") +
+  geom_line(mapping = aes(x = år, y = wf_KM/bef_KM), colour = "black") +
   ggtitle("Arbeidsstyrke relativt til befolkning. Menn blå, kvinner rød og totalt svart.") +
   theme(legend.position = "none")
 ```
